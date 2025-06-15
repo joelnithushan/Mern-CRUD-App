@@ -1,18 +1,11 @@
-const express=require("express");
-const router=express.Router();
+const express = require("express");
+const router = express.Router();
+const UserController = require("../Controller/UserController");
 
-//insert mode;
-const User=require("../Model/UserModel");
+router.get("/", UserController.getAllUsers);
+router.post("/", UserController.addUsers);
+router.get("/:id", UserController.getById);
+router.put("/:id", UserController.updateUser);
+router.delete("/:id", UserController.deleteUser);
 
-//insert user controller
-
-const UserController=require("../Controller/UserController");
-
-router.get("/",UserController.getAllUsers);
-router.post("/",UserController.addUsers);
-router.get("/:id",UserController.getById);
-router.put("/:id",UserController.updateUser);
-router.delete("/:id",UserController.deleteUser);
-
-//export
-module.exports=router;
+module.exports = router;
