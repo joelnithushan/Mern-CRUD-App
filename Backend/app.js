@@ -4,7 +4,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = require("./Routes/UserRoutes");
 
-const app = express();
 const cors = require("cors");
 
 //middleware
@@ -71,7 +70,7 @@ const storage = multer.diskStorage({
 //insert model part
 require("./Model/PdfModel");
 const pdfSchema = mongoose.model("PdfDetails");
-const upload = multer({ storage});
+// const upload = multer({ storage}); // Removed duplicate declaration
 
 app.post("/uploadfile", upload.single("file"), async (req, res) => {
   console.log(req.file);
@@ -144,3 +143,172 @@ app.get("/getImage", async (req, res) => {
   }
 
 });
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const multer = require("multer");
+const bcrypt = require("bcryptjs");
+const path = require("path");
+require("dotenv").config();
+
+// Initialize Express
+const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+  credentials: true
+}));
+app.use("/files", express.static(path.join(__dirname, "uploads")));
+
+// Database Connection
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(err => console.error("MongoDB connection error:", err));
+
+// Models
+const User = require("./models/User");
+const Pdf = require("./models/Pdf");
+const Image = require("./models/Image");
+
+// File Storage Configuration
+const createStorage = (destination) => multer.diskStorage({
+  destination: (req, file, cb) => cb(null, destination),
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ 
+  storage: createStorage(path.join(__dirname, "uploads")),
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith("image/") || file.mimetype === "application/pdf") {
+      cb(null, true);
+    } else {
+      cb(new Error("Invalid file type"), false);
+    }
+  }
+});
+
+// Routes
+// Auth Routes
+app.post("/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ message: "User already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const newUser = await User.create({ name, email, password: hashedPassword });
+    
+    res.status(201).json({ 
+      status: "success",
+      user: { id: newUser._id, name: newUser.name, email: newUser.email }
+    });
+  } catch (err) {
+    console.error("Registration error:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email }).select("+password");
+    
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    res.json({
+      status: "success",
+      user: { id: user._id, name: user.name, email: user.email }
+    });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// PDF Routes
+app.post("/uploadfile", upload.single("file"), async (req, res) => {
+  try {
+    const { title } = req.body;
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const newPdf = await Pdf.create({
+      title,
+      pdf: req.file.filename
+    });
+
+    res.status(201).json({ 
+      status: "success",
+      pdf: { id: newPdf._id, title: newPdf.title }
+    });
+  } catch (err) {
+    console.error("PDF upload error:", err);
+    res.status(500).json({ message: "File upload failed" });
+  }
+});
+
+app.get("/getFile", async (req, res) => {
+  try {
+    const pdfs = await Pdf.find().sort("-createdAt");
+    res.json({ status: "success", count: pdfs.length, data: pdfs });
+  } catch (err) {
+    console.error("PDF fetch error:", err);
+    res.status(500).json({ message: "Failed to fetch PDFs" });
+  }
+});
+
+// Image Routes
+app.post("/uploadImg", upload.single("image"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image uploaded" });
+    }
+
+    const newImage = await Image.create({
+      image: req.file.filename
+    });
+
+    res.status(201).json({ 
+      status: "success",
+      image: { id: newImage._id, filename: newImage.image }
+    });
+  } catch (err) {
+    console.error("Image upload error:", err);
+    res.status(500).json({ message: "Image upload failed" });
+  }
+});
+
+app.get("/getImage", async (req, res) => {
+  try {
+    const images = await Image.find().sort("-createdAt");
+    res.json({ status: "success", count: images.length, data: images });
+  } catch (err) {
+    console.error("Image fetch error:", err);
+    res.status(500).json({ message: "Failed to fetch images" });
+  }
+});
+
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Something went wrong!" });
+});
+
+// Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
