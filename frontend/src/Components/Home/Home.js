@@ -9,7 +9,7 @@ function Home() {
       <Nav />
       <div className="container mt-5">
         <div className="text-center">
-          <h1 className="display-4 mb-3 text-primary">Welcome to Your MERN App</h1>
+          <h1 className="display-4 mb-3 text-primary">Welcome to Your MERN CRUD App</h1> 
           <p className="lead mb-4">
             This is a modern MERN stack application. Easily manage users, upload PDFs and images, and explore more features!
           </p>
