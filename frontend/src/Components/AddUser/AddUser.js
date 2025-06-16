@@ -49,7 +49,7 @@ function AddUser() {
           <div className="col-md-6">
             <div className="card shadow">
               <div className="card-body">
-                <h2 className="card-title text-center mb-4 text-primary">Add User</h2>
+                <h2 style={{color:"black"}} className="card- text-center mb-4 ">Add User</h2>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label className="form-label">Name</label>
@@ -101,7 +101,7 @@ function AddUser() {
                   </div>
                   {error && <div className="alert alert-danger">{error}</div>}
                   <div className="d-grid">
-                    <button type="submit" className="btn btn-primary" disabled={loading}>
+                    <button type="submit" className="btn btn-primary"  style={{backgroundColor:"black", color:"white"}} disabled={loading}>
                       {loading ? "Submitting..." : "Submit"}
                     </button>
                   </div>

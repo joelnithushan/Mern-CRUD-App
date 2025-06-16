@@ -74,7 +74,7 @@ function Imguploder() {
     <>
       <Nav />
       <div className="container mt-4">
-        <h1 className="mb-4 text-primary">Image Upload</h1>
+        <h1 className="mb-4 " style={{color:"black"}}>Image Upload</h1>
         <form className="card p-4 mb-4 shadow" onSubmit={submitImg}>
           <div className="mb-3">
             <label htmlFor="img-upload" className="form-label">Select an image:</label>

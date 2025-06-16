@@ -82,7 +82,7 @@ function SendPdf() {
     <>
       <Nav />
       <div className="container mt-4">
-        <h1 className="text-primary mb-4">PDF Upload</h1>
+        <h1 style={{color:"black"}} className=" mb-4">PDF Upload</h1>
         <form className="card p-4 mb-4 shadow" onSubmit={submitPdf}>
           <div className="mb-3">
             <label htmlFor="pdf-title" className="form-label">PDF Title</label>

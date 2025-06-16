@@ -34,7 +34,7 @@ function Contactus() {
           <div className="col-md-6">
             <div className="card shadow">
               <div className="card-body">
-                <h2 className="card-title text-center mb-4 text-primary">Contact Us</h2>
+                <h2  style={{color:"black"}} className="card-title text-center mb-4 ">Contact Us</h2>
                 <form ref={form} onSubmit={sendEmail}>
                   <div className="mb-3">
                     <label className="form-label">Name</label>

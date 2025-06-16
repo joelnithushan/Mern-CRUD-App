@@ -95,7 +95,7 @@ function Users() {
     <>
       <Nav />
       <div className="container mt-4">
-        <h1 className="mb-4 text-primary text-center">User Details Display Page</h1>
+        <h1 className="mb-4  text-center" style={{color:"black"}}>User Details Display Page</h1>
         <div className="row mb-3 justify-content-center">
           <div className="col-md-6">
             <div className="input-group">
