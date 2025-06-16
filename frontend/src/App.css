@@ -1,0 +1,8 @@
+@media print {
+  .container, .row, .col-md-6, .col-lg-4, .btn, .input-group, .navbar, .alert, .d-print-none {
+    display: none !important;
+  }
+  .d-print-block {
+    display: block !important;
+  }
+}
