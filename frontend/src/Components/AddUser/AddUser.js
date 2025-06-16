@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 function AddUser() {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({

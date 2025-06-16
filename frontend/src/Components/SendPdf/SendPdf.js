@@ -107,7 +107,7 @@ function SendPdf() {
               onChange={e => setFile(e.target.files[0])}
             />
           </div>
-          <button type="submit" className="btn btn-primary" disabled={uploading}>
+          <button type="submit" className="btn btn-primary" style={{backgroundColor:"black",color:"white"}} disabled={uploading}>
             {uploading ? 'Uploading...' : 'Submit'}
           </button>
         </form>

@@ -94,7 +94,7 @@ function Register() {
                   </div>
                   {error && <div className="alert alert-danger">{error}</div>}
                   <div className="d-grid">
-                    <button type="submit" className="btn btn-primary" disabled={loading}>
+                    <button type="submit" className="btn btn-primary" style={{backgroundColor:"black",color:"white"}} disabled={loading}>
                       {loading ? 'Registering...' : 'Register'}
                     </button>
                   </div>

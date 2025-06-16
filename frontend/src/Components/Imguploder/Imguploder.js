@@ -86,7 +86,7 @@ function Imguploder() {
               onChange={onImgChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary" disabled={uploading}>
+          <button type="submit" className="btn btn-primary" style={{backgroundColor:"black",color:"white"}} disabled={uploading}>
             {uploading ? 'Uploading...' : 'Upload'}
           </button>
         </form>

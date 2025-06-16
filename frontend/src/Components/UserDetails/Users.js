@@ -85,7 +85,7 @@ function Users() {
 
   const handleSendReport = () => {
     const phoneNumber = "+94769423167";
-    const message = 'Select the drug report from here';
+    const message = 'Select the user report from here';
     const whatsappUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
     toast.info("WhatsApp message window opened");
@@ -108,7 +108,7 @@ function Users() {
                 placeholder="Search by Name, Email, Age or Address"
                 disabled={loading}
               />
-              <button className="btn btn-primary" onClick={handleSearch} disabled={loading}>
+              <button className="btn btn-primary" style={{backgroundColor:"black",color:"white"}} onClick={handleSearch} disabled={loading}>
                 Search
               </button>
               <button
@@ -139,9 +139,9 @@ function Users() {
         ) : noResults ? (
           <div className="alert alert-warning text-center">No Users Found</div>
         ) : (
-          <div ref={componentRef} className="row">
+          <div ref={componentRef} className="row" style={{color:"black"}}>
             {users.map((user) => (
-              <div key={user._id || user.email} className="col-md-6 col-lg-4 mb-4">
+              <div key={user._id || user.email} className="col-md-6 col-lg-4 mb-4" >
                 <User user={user} onDelete={handleUserDelete} />
               </div>
             ))}

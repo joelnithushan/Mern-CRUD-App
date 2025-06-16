@@ -16,7 +16,7 @@
   display: block;
   width: 0%;
   height: 2.5px;
-  background: linear-gradient(90deg, #007bff, #00c3ff);
+  background: linear-gradient(90deg, #363738, #3a3b3b);
   transition: width 0.3s;
   border-radius: 2px;
   margin-top: 3px;
@@ -24,7 +24,7 @@
 
 .custom-navbar .nav-link:hover,
 .custom-navbar .nav-link.active {
-  color: #00c3ff !important;
+  color: gray !important;
 }
 
 .custom-navbar .nav-link:hover::after,

@@ -48,8 +48,8 @@ function Contactus() {
                     <label className="form-label">Message</label>
                     <textarea name="message" className="form-control" rows={4} required />
                   </div>
-                  <div className="d-grid">
-                    <input type="submit" value="Send" className="btn btn-primary" />
+                  <div className="d-grid" >
+                    <input type="submit" style={{backgroundColor:"black",color:"white"}}  value="Send" className="btn btn-primary" />
                   </div>
                 </form>
               </div>

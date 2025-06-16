@@ -14,7 +14,7 @@ function Home() {
             This is a modern MERN stack application. Easily manage users, upload PDFs and images, and explore more features!
           </p>
           <div className="d-flex justify-content-center gap-3 mb-5">
-            <a href="/userdetails" className="btn btn-primary btn-lg">
+            <a href="/userdetails" className="btn btn-primary btn-lg" style={{ backgroundColor: 'black', color: 'white' }}>
               View Users
             </a>
             <a href="/adduser" className="btn btn-outline-primary btn-lg">
